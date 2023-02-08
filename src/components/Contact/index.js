@@ -1,14 +1,13 @@
 import './index.scss';
 import Loader from 'react-loaders';
 import AnimatedLetters from '../AnimatedLetters';
-import { useEffect, useState } from 'react';
-import { useRef } from 'react'
+import { useEffect, useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const Contact = () => {
     const [letterClass, setLetterClass] = useState('text-animate');
-    const form = useRef();
+    const refForm = useRef();
 
     useEffect(() =>{
         setTimeout(() => {
@@ -18,11 +17,10 @@ const Contact = () => {
 
     const sendEmail = (e) => {
         e.preventDefault();
-
         emailjs.sendForm(
             "contact_service",
             "contact_form",
-            form.current,
+            refForm.current,
             "r437-DMSrEIP5EqP5"
         )
         .then(
@@ -32,6 +30,7 @@ const Contact = () => {
             },
             () => {
                 alert('Failed to send the message, please try again');
+                return false;
             }
         )
     }
@@ -51,13 +50,13 @@ const Contact = () => {
                         I am interested in long term contractor opportunities - specially ambitious or large projects. However, if you have other opportunities or questions don't hesitate to contact me using below form either.
                     </p>
                     <div className="contact-form">
-                        <form ref={form} onSubmit={sendEmail}>
+                        <form ref={refForm} onSubmit={sendEmail}>
                             <ul>
                                 <li className="half">
-                                    <input type="text" name="name" placeholder="Name" required />
+                                    <input type="text" name="user_name" placeholder="Name" required />
                                 </li>
                                 <li className="half">
-                                    <input type="email" name="email" placeholder="Email" required />
+                                    <input type="email" name="user_email" placeholder="Email" required />
                                 </li>
                                 <li>
                                     <input type="text" name="subject" placeholder="Subject" required />
